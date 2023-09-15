@@ -1,6 +1,7 @@
 package com.example.demo.adaptor.out.persistence;
 
 import com.example.demo.adaptor.dto.ChatRequest;
+import com.example.demo.application.mapper.ChatMapper;
 import com.example.demo.application.port.out.FindChatPort;
 import com.example.demo.application.port.out.SendChatPort;
 import com.example.demo.domain.Chat;
@@ -12,6 +13,7 @@ import reactor.core.publisher.Mono;
 @RequiredArgsConstructor
 @Repository
 public class ChatPersistenceAdaptor implements SendChatPort, FindChatPort {
+    private final ChatMapper chatMapper;
     private final ChatRepository chatRepository;
     @Override
     public Flux<Chat> findChatByMemberId(Long sender, Long receiver) {
@@ -20,7 +22,7 @@ public class ChatPersistenceAdaptor implements SendChatPort, FindChatPort {
 
     @Override
     public Mono<Void> sendChat(ChatRequest request) {
-        Chat chat = request.toChat();
+        Chat chat = chatMapper.toChat(request);
         return chatRepository.save(chat).then();
     }
 }
