@@ -8,3 +8,8 @@ spring:
     redis:
       port: 6379
       host: localhost
+
+# custom properties
+custom:
+  jwt:
+    secret-key:

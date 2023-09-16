@@ -1,6 +1,7 @@
 package com.example.demo.adaptor.out.persistence;
 
 import com.example.demo.adaptor.dto.ChatRequest;
+import com.example.demo.adaptor.dto.ChatResponse;
 import com.example.demo.application.mapper.ChatMapper;
 import com.example.demo.application.port.out.FindChatPort;
 import com.example.demo.application.port.out.SendChatPort;
@@ -16,8 +17,8 @@ public class ChatPersistenceAdaptor implements SendChatPort, FindChatPort {
     private final ChatMapper chatMapper;
     private final ChatRepository chatRepository;
     @Override
-    public Flux<Chat> findChatByMemberId(Long sender, Long receiver) {
-        return chatRepository.findBySenderAndReceiver(sender, receiver);
+    public Flux<ChatResponse> findChatByMemberId(Long sender, Long receiver) {
+        return chatMapper.toResponse(chatRepository.findBySenderAndReceiver(sender, receiver));
     }
 
     @Override
