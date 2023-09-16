@@ -1,10 +1,10 @@
 package com.example.demo.application.service;
 
+import com.example.demo.TestInitUtil;
 import com.example.demo.adaptor.dto.ChatRequest;
 import com.example.demo.adaptor.dto.ChatResponse;
 import com.example.demo.application.port.out.FindChatPort;
 import com.example.demo.application.port.out.SendChatPort;
-import com.example.demo.domain.ChatType;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -14,8 +14,6 @@ import org.mockito.MockitoAnnotations;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import reactor.test.StepVerifier;
-
-import java.time.LocalDateTime;
 
 import static org.mockito.Mockito.*;
 
@@ -31,13 +29,10 @@ public class ChatServiceTest {
     public void setUp() {
         MockitoAnnotations.openMocks(this);
     }
-    ChatRequest chatRequest() {
-        return new ChatRequest(1L, 2L, "hello", ChatType.MESSAGE);
-    }
     @Test
     @DisplayName("message 타입의 채팅을 보낸다.")
     void sendMessageType_responseVoid_time1() {
-        ChatRequest request = chatRequest();
+        ChatRequest request = TestInitUtil.requestMessage();
         when(sendChatPort.sendChat(request)).thenReturn(Mono.empty());
 
         Mono<Void> sendChat = chatService.sendChat(request);
@@ -51,7 +46,7 @@ public class ChatServiceTest {
     void findChat() {
         Long sender = 1L;
         Long receiver = 2L;
-        ChatResponse response = new ChatResponse("sender", "receiver", "hello", ChatType.MESSAGE, LocalDateTime.now());
+        ChatResponse response = TestInitUtil.responseMessage();
         when(findChatPort.findChatByMemberId(sender, receiver)).thenReturn(Flux.just(response));
 
         Flux<ChatResponse> responseFlux = chatService.findBySenderAndReceiver(sender, receiver);

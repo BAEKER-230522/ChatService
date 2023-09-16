@@ -1,10 +1,10 @@
 package com.example.demo.adaptor.in;
 
+import com.example.demo.TestInitUtil;
 import com.example.demo.adaptor.dto.ChatRequest;
 import com.example.demo.adaptor.in.web.ChatController;
 import com.example.demo.application.port.in.FindChatUseCase;
 import com.example.demo.application.port.in.SendChatUseCase;
-import com.example.demo.domain.ChatType;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,13 +27,10 @@ public class ChatControllerTest {
     @MockBean
     private FindChatUseCase findChatUseCase;
 
-    ChatRequest chatRequest() {
-        return new ChatRequest(1L, 2L, "hello", ChatType.MESSAGE);
-    }
     @Test
     @DisplayName("message 타입의 채팅을 보낸다.")
     void sendTest() {
-        ChatRequest request = chatRequest();
+        ChatRequest request = TestInitUtil.requestMessage();
         when(sendChatUseCase.sendChat(request)).thenReturn(Mono.empty());
 
         testClient.post()
