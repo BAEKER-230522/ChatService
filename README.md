@@ -3,5 +3,4 @@
 - RSocket 
 - Webflux
 - Java
-- MongoDB:
-- Redis
+- MongoDB
