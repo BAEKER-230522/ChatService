@@ -20,7 +20,6 @@ import java.util.Map;
 public class ChatMapper {
     private final RedisUtil redisUtil;
     private final JwtProvider jwtProvider;
-    private final ChatMapper self;
     public Chat toChat(ChatRequest request) {
         if (request.chatType().equals(ChatType.OUT)) return quit(request);
         else if (request.chatType().equals(ChatType.IN)) return enter(request);
@@ -59,8 +58,8 @@ public class ChatMapper {
 
     public Flux<ChatResponse> toResponse(Flux<Chat> chatFlux) {
         return chatFlux.flatMap(chat -> {
-            Mono<String> senderMono = self.getUserName(chat.getSender());
-            Mono<String> receiverMono = self.getUserName(chat.getReceiver());
+            Mono<String> senderMono = this.getUserName(chat.getSender());
+            Mono<String> receiverMono = this.getUserName(chat.getReceiver());
 
             return Mono.zip(senderMono, receiverMono)
                     .map(tuple -> new ChatResponse(
