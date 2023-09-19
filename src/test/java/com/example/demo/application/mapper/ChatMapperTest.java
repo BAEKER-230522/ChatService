@@ -25,7 +25,7 @@ public class ChatMapperTest {
         Assertions.assertEquals(chat.getSender(), request.sender());
         Assertions.assertEquals(chat.getReceiver(), request.receiver());
         Assertions.assertEquals(chat.getMessage(), request.sender() + "님이 나갔습니다.");
-        Assertions.assertEquals(chat.getChatType(), request.chatType());
+        Assertions.assertEquals(chat.getChatType().getType(), request.chatType());
     }
 
     @Test
@@ -37,7 +37,7 @@ public class ChatMapperTest {
         Assertions.assertEquals(chat.getSender(), request.sender());
         Assertions.assertEquals(chat.getReceiver(), request.receiver());
         Assertions.assertEquals(chat.getMessage(), request.sender() + "님이 대화를 시작하였습니다.");
-        Assertions.assertEquals(chat.getChatType(), request.chatType());
+        Assertions.assertEquals(chat.getChatType().getType(), request.chatType());
     }
 
     @Test
@@ -49,6 +49,6 @@ public class ChatMapperTest {
         Assertions.assertEquals(chat.getSender(), request.sender());
         Assertions.assertEquals(chat.getReceiver(), request.receiver());
         Assertions.assertEquals(chat.getMessage(), request.message());
-        Assertions.assertEquals(chat.getChatType(), request.chatType());
+        Assertions.assertEquals(chat.getChatType().getType(), request.chatType());
     }
 }

@@ -21,8 +21,9 @@ public class ChatMapper {
     private final RedisUtil redisUtil;
     private final JwtProvider jwtProvider;
     public Chat toChat(ChatRequest request) {
-        if (request.chatType().equals(ChatType.OUT)) return quit(request);
-        else if (request.chatType().equals(ChatType.IN)) return enter(request);
+        String chatType = request.chatType().toUpperCase();
+        if (chatType.equals("OUT")) return quit(request);
+        else if (chatType.equals("IN")) return enter(request);
         return message(request);
     }
 
@@ -31,7 +32,7 @@ public class ChatMapper {
                 .sender(request.sender())
                 .receiver(request.receiver())
                 .message(request.sender() + "님이 나갔습니다.")
-                .chatType(request.chatType())
+                .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
                 .build();
     }
@@ -41,7 +42,7 @@ public class ChatMapper {
                 .sender(request.sender())
                 .receiver(request.receiver())
                 .message(request.sender() + "님이 대화를 시작하였습니다.")
-                .chatType(request.chatType())
+                .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
                 .build();
     }
@@ -51,7 +52,7 @@ public class ChatMapper {
                 .sender(request.sender())
                 .receiver(request.receiver())
                 .message(request.message())
-                .chatType(request.chatType())
+                .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
                 .build();
     }
@@ -66,6 +67,14 @@ public class ChatMapper {
                             tuple.getT1(), tuple.getT2(), chat.getMessage(),
                             chat.getChatType(), chat.getSendMessageAt()));
         });
+    }
+
+    private ChatType chatType(String chatType) {
+        return switch (chatType.toUpperCase()) {
+            case "IN" -> ChatType.IN;
+            case "OUT" -> ChatType.OUT;
+            default -> ChatType.MESSAGE;
+        };
     }
 
     @Cacheable(value = "username", key = "#sender")

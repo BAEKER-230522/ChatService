@@ -23,7 +23,6 @@ public class ChatClientService{
     public Mono<Void> sendChat(ChatRequest request) {
         return Mono.just(rSocketRequester.route("/chat")
                 .data(request)
-                .send()
-                .block());
+                .send()).then();
     }
 }

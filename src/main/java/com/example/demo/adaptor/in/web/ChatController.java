@@ -32,8 +32,7 @@ public class ChatController {
         System.out.println("chatRequest = " + chatRequest);
         rSocketRequester.route("chat")
                 .data(chatRequest)
-                .send()
-                .block();
+                .send();
         return sendChatUseCase.sendChat(chatRequest);
     }
 
