@@ -24,14 +24,14 @@ public class ChatService implements SendChatUseCase, FindChatUseCase {
 
     @Override
     public Flux<ChatResponse> findBySenderAndReceiver(Long sender, Long receiver) {
-        return chatClientService.findBySenderAndReceiver(sender, receiver);
-//        return findChatPort.findChatByMemberId(sender, receiver);
+        chatClientService.findBySenderAndReceiver(sender, receiver);
+        return findChatPort.findChatByMemberId(sender, receiver);
     }
 
     @Override
     @Transactional
     public Mono<Void> sendChat(ChatRequest request) {
-        return chatClientService.sendChat(request);
-//        return sendChatPort.sendChat(request);
+        chatClientService.sendChat(request);
+        return sendChatPort.sendChat(request);
     }
 }

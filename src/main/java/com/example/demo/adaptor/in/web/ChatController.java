@@ -2,6 +2,7 @@ package com.example.demo.adaptor.in.web;
 
 import com.example.demo.adaptor.dto.ChatRequest;
 import com.example.demo.adaptor.dto.ChatResponse;
+import com.example.demo.adaptor.dto.ShowChatRequest;
 import com.example.demo.application.port.in.FindChatUseCase;
 import com.example.demo.application.port.in.SendChatUseCase;
 import io.rsocket.RSocket;
@@ -45,9 +46,9 @@ public class ChatController {
         return "test";
     }
 
-    @MessageMapping("/chat/{sender}/{receiver}")
-    public Flux<ChatResponse> findChat(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver) {
-        return findChatUseCase.findBySenderAndReceiver(sender, receiver);
+    @MessageMapping("show.message")
+    public Flux<ChatResponse> findChat(@RequestBody ShowChatRequest request) {
+        return findChatUseCase.findBySenderAndReceiver(request.sender(), request.receiver());
     }
 
     @ConnectMapping("connect")

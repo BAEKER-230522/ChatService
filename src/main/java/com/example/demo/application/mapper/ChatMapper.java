@@ -79,10 +79,6 @@ public class ChatMapper {
 
     @Cacheable(value = "username", key = "#sender")
     public Mono<String> getUserName(Long sender) {
-        return redisUtil.getValue(sender.toString())
-                .flatMap(token -> {
-                    Map<String, Object> claims = jwtProvider.getClaims(token);
-                    return Mono.justOrEmpty(claims.get("username").toString());
-                });
+        return Mono.just(redisUtil.getValue(sender));
     }
 }

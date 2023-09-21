@@ -16,12 +16,12 @@ public class ChatClientService{
     private final RSocketRequester rSocketRequester;
 
     public Flux<ChatResponse> findBySenderAndReceiver(Long sender, Long receiver) {
-        return rSocketRequester.route("/chat/{sender}/{receiver}", sender, receiver)
+        return rSocketRequester.route("chat.{sender}.{receiver}", sender, receiver)
                 .retrieveFlux(ChatResponse.class);
     }
 
     public Mono<Void> sendChat(ChatRequest request) {
-        return Mono.just(rSocketRequester.route("/chat")
+        return Mono.just(rSocketRequester.route("chat")
                 .data(request)
                 .send()).then();
     }
