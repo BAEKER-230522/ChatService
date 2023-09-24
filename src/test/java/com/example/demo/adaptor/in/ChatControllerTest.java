@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.reactive.WebFluxTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
 import org.springframework.messaging.rsocket.RSocketRequester;
 import org.springframework.test.web.reactive.server.WebTestClient;
@@ -18,7 +19,8 @@ import reactor.core.publisher.Mono;
 
 import static org.mockito.Mockito.when;
 
-@WebFluxTest(controllers = ChatController.class,excludeAutoConfiguration = {RSocketConfig.class})
+@WebFluxTest(controllers = ChatController.class)
+@Import(RSocketConfig.class)
 public class ChatControllerTest {
     @Autowired
     private WebTestClient testClient;

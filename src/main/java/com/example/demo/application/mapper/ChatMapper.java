@@ -61,7 +61,6 @@ public class ChatMapper {
         return chatFlux.flatMap(chat -> {
             Mono<String> senderMono = this.getUserName(chat.getSender());
             Mono<String> receiverMono = this.getUserName(chat.getReceiver());
-
             return Mono.zip(senderMono, receiverMono)
                     .map(tuple -> new ChatResponse(
                             tuple.getT1(), tuple.getT2(), chat.getMessage(),
