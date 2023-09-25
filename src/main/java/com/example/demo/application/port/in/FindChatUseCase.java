@@ -4,5 +4,5 @@ import com.example.demo.adaptor.dto.ChatResponse;
 import reactor.core.publisher.Flux;
 
 public interface FindChatUseCase {
-    Flux<ChatResponse> findBySenderAndReceiver(Long sender, Long receiver);
+    Flux<ChatResponse> findBySenderAndReceiver(String sender, String receiver);
 }

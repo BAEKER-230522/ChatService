@@ -5,5 +5,5 @@ import reactor.core.publisher.Flux;
 
 
 public interface FindChatPort {
-    Flux<ChatResponse> findChatByMemberId(Long sender, Long receiver);
+    Flux<ChatResponse> findChatByMemberId(String sender, String receiver);
 }

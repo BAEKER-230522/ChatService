@@ -13,11 +13,7 @@ import reactor.core.publisher.Flux;
 public class TempController {
     private final FindChatUseCase findChatUseCase;
     @GetMapping("/test/{sender}/{receiver}")
-    public void test(@PathVariable("sender") Long sender, @PathVariable("receiver") Long receiver) {
-        Flux<ChatResponse> bySenderAndReceiver = findChatUseCase.findBySenderAndReceiver(sender, receiver);
-        System.out.println("bySenderAndReceiver = " + bySenderAndReceiver);
-        for (Object o : bySenderAndReceiver.toIterable() ) {
-            System.out.println("print mongo"+o.toString());
-        }
+    public Flux<ChatResponse> test(@PathVariable("sender") String sender, @PathVariable("receiver") String receiver) {
+        return findChatUseCase.findBySenderAndReceiver(sender, receiver);
     }
 }

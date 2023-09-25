@@ -23,7 +23,7 @@ public class ChatService implements SendChatUseCase, FindChatUseCase {
     private final ChatClientService chatClientService;
 
     @Override
-    public Flux<ChatResponse> findBySenderAndReceiver(Long sender, Long receiver) {
+    public Flux<ChatResponse> findBySenderAndReceiver(String sender, String receiver) {
 //        chatClientService.findBySenderAndReceiver(sender, receiver);
         return findChatPort.findChatByMemberId(sender, receiver);
     }

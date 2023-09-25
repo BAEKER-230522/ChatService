@@ -29,9 +29,9 @@ public class ChatMapper {
 
     private Chat quit(ChatRequest request) {
         return Chat.builder()
-                .sender(request.sender())
-                .receiver(request.receiver())
-                .message(request.sender() + "님이 나갔습니다.")
+                .sender(Long.parseLong(request.senderId()))
+                .receiver(Long.parseLong(request.receiverId()))
+                .message(getUserName(request.senderId()) + "님이 나갔습니다.")
                 .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
                 .build();
@@ -39,9 +39,9 @@ public class ChatMapper {
 
     private Chat enter(ChatRequest request) {
         return Chat.builder()
-                .sender(request.sender())
-                .receiver(request.receiver())
-                .message(request.sender() + "님이 대화를 시작하였습니다.")
+                .sender(Long.parseLong(request.senderId()))
+                .receiver(Long.parseLong(request.receiverId()))
+                .message(getUserName(request.senderId()) + "님이 대화를 시작하였습니다.")
                 .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
                 .build();
@@ -49,8 +49,8 @@ public class ChatMapper {
 
     private Chat message(ChatRequest request) {
         return Chat.builder()
-                .sender(request.sender())
-                .receiver(request.receiver())
+                .sender(Long.parseLong(request.senderId()))
+                .receiver(Long.parseLong(request.receiverId()))
                 .message(request.message())
                 .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
@@ -59,8 +59,8 @@ public class ChatMapper {
 
     public Flux<ChatResponse> toResponse(Flux<Chat> chatFlux) {
         return chatFlux.flatMap(chat -> {
-            Mono<String> senderMono = this.getUserName(chat.getSender());
-            Mono<String> receiverMono = this.getUserName(chat.getReceiver());
+            Mono<String> senderMono = Mono.just(this.getUserName(String.valueOf(chat.getSender())));
+            Mono<String> receiverMono = Mono.just(this.getUserName(String.valueOf(chat.getReceiver())));
             return Mono.zip(senderMono, receiverMono)
                     .map(tuple -> new ChatResponse(
                             tuple.getT1(), tuple.getT2(), chat.getMessage(),
@@ -77,7 +77,8 @@ public class ChatMapper {
     }
 
     @Cacheable(value = "username", key = "#sender")
-    public Mono<String> getUserName(Long sender) {
-        return Mono.just(redisUtil.getValue(sender));
+    public String getUserName(String sender) {
+        Map<String, Object> claims = jwtProvider.getClaims(redisUtil.getValue(sender));
+        return claims.get("username").toString();
     }
 }
