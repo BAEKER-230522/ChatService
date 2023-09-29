@@ -22,9 +22,9 @@ public class ChatMapperTest {
         Chat chat = chatMapper.toChat(request);
 
 
-        Assertions.assertEquals(chat.getSender(), request.sender());
-        Assertions.assertEquals(chat.getReceiver(), request.receiver());
-        Assertions.assertEquals(chat.getMessage(), request.sender() + "님이 나갔습니다.");
+        Assertions.assertEquals(chat.getSender(), request.senderId());
+        Assertions.assertEquals(chat.getReceiver(), request.receiverId());
+        Assertions.assertEquals(chat.getMessage(), request.senderId() + "님이 나갔습니다.");
         Assertions.assertEquals(chat.getChatType().getType(), request.chatType());
     }
 
@@ -34,9 +34,9 @@ public class ChatMapperTest {
         ChatRequest request = TestInitUtil.requestEnter();
         Chat chat = chatMapper.toChat(request);
 
-        Assertions.assertEquals(chat.getSender(), request.sender());
-        Assertions.assertEquals(chat.getReceiver(), request.receiver());
-        Assertions.assertEquals(chat.getMessage(), request.sender() + "님이 대화를 시작하였습니다.");
+        Assertions.assertEquals(chat.getSender(), request.senderId());
+        Assertions.assertEquals(chat.getReceiver(), request.receiverId());
+        Assertions.assertEquals(chat.getMessage(), request.senderId() + "님이 대화를 시작하였습니다.");
         Assertions.assertEquals(chat.getChatType().getType(), request.chatType());
     }
 
@@ -46,8 +46,8 @@ public class ChatMapperTest {
         ChatRequest request = TestInitUtil.requestMessage();
         Chat chat = chatMapper.toChat(request);
 
-        Assertions.assertEquals(chat.getSender(), request.sender());
-        Assertions.assertEquals(chat.getReceiver(), request.receiver());
+        Assertions.assertEquals(chat.getSender(), request.senderId());
+        Assertions.assertEquals(chat.getReceiver(), request.receiverId());
         Assertions.assertEquals(chat.getMessage(), request.message());
         Assertions.assertEquals(chat.getChatType().getType(), request.chatType());
     }

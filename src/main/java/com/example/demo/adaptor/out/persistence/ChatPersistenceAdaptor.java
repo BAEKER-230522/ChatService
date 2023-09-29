@@ -17,7 +17,7 @@ public class ChatPersistenceAdaptor implements SendChatPort, FindChatPort {
     private final ChatMapper chatMapper;
     private final ChatRepository chatRepository;
     @Override
-    public Flux<ChatResponse> findChatByMemberId(Long sender, Long receiver) {
+    public Flux<ChatResponse> findChatByMemberId(String sender, String receiver) {
         return chatMapper.toResponse(chatRepository.findBySenderAndReceiver(sender, receiver));
     }
 

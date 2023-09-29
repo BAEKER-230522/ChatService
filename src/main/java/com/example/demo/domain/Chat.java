@@ -18,8 +18,8 @@ public class Chat {
     @Id
     private String id;
     private ChatType chatType;
-    private Long sender;
-    private Long receiver;
+    private String sender;
+    private String receiver;
     private String message;
     private LocalDateTime sendMessageAt;
 }

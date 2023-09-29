@@ -8,15 +8,15 @@ import java.time.LocalDateTime;
 
 public class TestInitUtil {
     public static ChatRequest requestMessage() {
-        return new ChatRequest(1L, 2L, "hello", "MESSAGE");
+        return new ChatRequest("1", "2", "hello", "MESSAGE");
     }
 
     public static ChatRequest requestEnter() {
-        return new ChatRequest(1L, 2L, "enter", "IN");
+        return new ChatRequest("1", "2", "enter", "IN");
     }
 
     public static ChatRequest requestQuit() {
-        return new ChatRequest(1L, 2L, "quit", "OUT");
+        return new ChatRequest("1", "2", "quit", "OUT");
     }
 
     public static ChatResponse responseMessage() {

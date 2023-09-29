@@ -44,8 +44,8 @@ public class ChatServiceTest {
     @Test
     @DisplayName("채팅을 조회한다.")
     void findChat() {
-        Long sender = 1L;
-        Long receiver = 2L;
+        String sender = "1";
+        String receiver = "2";
         ChatResponse response = TestInitUtil.responseMessage();
         when(findChatPort.findChatByMemberId(sender, receiver)).thenReturn(Flux.just(response));
 

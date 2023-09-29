@@ -29,8 +29,8 @@ public class ChatMapper {
 
     private Chat quit(ChatRequest request) {
         return Chat.builder()
-                .sender(Long.parseLong(request.senderId()))
-                .receiver(Long.parseLong(request.receiverId()))
+                .sender(request.senderId())
+                .receiver(request.receiverId())
                 .message(getUserName(request.senderId()) + "님이 나갔습니다.")
                 .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
@@ -39,8 +39,8 @@ public class ChatMapper {
 
     private Chat enter(ChatRequest request) {
         return Chat.builder()
-                .sender(Long.parseLong(request.senderId()))
-                .receiver(Long.parseLong(request.receiverId()))
+                .sender(request.senderId())
+                .receiver(request.receiverId())
                 .message(getUserName(request.senderId()) + "님이 대화를 시작하였습니다.")
                 .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())
@@ -49,8 +49,8 @@ public class ChatMapper {
 
     private Chat message(ChatRequest request) {
         return Chat.builder()
-                .sender(Long.parseLong(request.senderId()))
-                .receiver(Long.parseLong(request.receiverId()))
+                .sender(request.senderId())
+                .receiver(request.receiverId())
                 .message(request.message())
                 .chatType(chatType(request.chatType()))
                 .sendMessageAt(LocalDateTime.now())

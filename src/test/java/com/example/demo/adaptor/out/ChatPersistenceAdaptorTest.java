@@ -34,13 +34,13 @@ public class ChatPersistenceAdaptorTest {
     @Test
     @DisplayName("채팅을 조회한다.")
     public void testFindChatByMemberId() {
-        Chat mockChat = new Chat(null,ChatType.MESSAGE, 1L, 2L, "testMessage", LocalDateTime.now());
+        Chat mockChat = new Chat(null,ChatType.MESSAGE, "1", "2", "testMessage", LocalDateTime.now());
         ChatResponse mockResponse = new ChatResponse("sender", "receiver", "testMessage", ChatType.MESSAGE, LocalDateTime.now());
 
-        when(chatRepository.findBySenderAndReceiver(1L, 2L)).thenReturn(Flux.just(mockChat));
+        when(chatRepository.findBySenderAndReceiver("1", "2")).thenReturn(Flux.just(mockChat));
         when(chatMapper.toResponse(any(Flux.class))).thenReturn(Flux.just(mockResponse));
 
-        Flux<ChatResponse> result = chatPersistenceAdaptor.findChatByMemberId(1L, 2L);
+        Flux<ChatResponse> result = chatPersistenceAdaptor.findChatByMemberId("1", "2");
 
         StepVerifier.create(result)
                 .expectNext(mockResponse)
