@@ -16,7 +16,7 @@ spring:
       transport: "tcp"
       mapping-path: "/rsocket"
   profiles:
-    active: dev
+    active:
 
 # custom properties
 custom:
