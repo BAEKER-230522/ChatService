@@ -19,7 +19,7 @@ public class RSocketConfig {
 //        return handler;
 //    }
 
-//    @Bean
+    //    @Bean
 //    public RSocketStrategies rsocketStrategies() {
 //        return RSocketStrategies.builder()
 //                .encoders(encoders -> encoders.add(new Jackson2CborEncoder()))
@@ -35,4 +35,5 @@ public class RSocketConfig {
                 .dataMimeType(MimeTypeUtils.APPLICATION_JSON)
                 .tcp("localhost", 6565);
     }
+
 }

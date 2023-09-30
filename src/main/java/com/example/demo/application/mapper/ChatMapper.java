@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 @Component
 @RequiredArgsConstructor
@@ -78,7 +77,8 @@ public class ChatMapper {
 
     @Cacheable(value = "username", key = "#sender")
     public String getUserName(String sender) {
-        Map<String, Object> claims = jwtProvider.getClaims(redisUtil.getValue(sender));
-        return claims.get("username").toString();
+        return sender;
+//        Map<String, Object> claims = jwtProvider.getClaims(redisUtil.getValue(sender));
+//        return claims.get("username").toString();
     }
 }

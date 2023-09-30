@@ -30,7 +30,6 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-mongodb-reactive'
 
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
-    implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-client'
     implementation 'org.springframework.cloud:spring-cloud-starter-openfeign'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -64,8 +63,6 @@ dependencies {
     // devtools
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
 
-    // spring shell
-    implementation group: 'org.springframework.shell', name: 'spring-shell-starter', version: '2.0.1.RELEASE'
 
 
 }
