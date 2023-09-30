@@ -6,11 +6,14 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import javax.crypto.SecretKey;
 import java.util.Base64;
+import java.util.Collections;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 
 @Component
 @RequiredArgsConstructor
@@ -43,15 +46,39 @@ public class JwtProvider {
 
 
     // 토큰으로부터 클레임을 가져온다
-    public Map<String, Object> getClaims(String token) {
-        String body = Jwts.parserBuilder()
-                .setSigningKey(getSecretKey())
-                .build()
-                .parseClaimsJws(token)
-                .getBody()
-                .get("body", String.class);
+//    public Map<String, Object> getClaims(String token) {
+//        String body = Jwts.parserBuilder()
+//                .setSigningKey(getSecretKey())
+//                .build()
+//                .parseClaimsJws(token)
+//                .getBody()
+//                .get("body", String.class);
+//
+//        return JsonUtil.toMap(body);
+//    }
 
-        return JsonUtil.toMap(body);
+    @Async
+    public CompletableFuture<Map<String, Object>> getClaims(String token) {
+        return CompletableFuture.supplyAsync(() -> {
+            try {
+                String body = Jwts.parserBuilder()
+                        .setSigningKey(getSecretKey())
+                        .build()
+                        .parseClaimsJws(token)
+                        .getBody()
+                        .get("body", String.class);
+
+                if (body == null) {
+                    // 또는 적절한 예외를 던질 수 있습니다.
+                    return Collections.emptyMap();
+                }
+
+                return JsonUtil.toMap(body);
+            } catch (Exception e) {
+                // 로깅하거나 적절한 예외를 던지세요.
+                throw new RuntimeException("Error processing JWT", e);
+            }
+        });
     }
 
 }
